@@ -1,8 +1,8 @@
 {
-  "name": "typonator",
+  "name": "code-states-visualizer",
   "version": "0.0.0",
   "main": "index.js",
-  "author": "Henrik Nygren <nygrenh@gmail.com>",
+  "author": "Antti Leinonen <antti.leinonen@helsinki.fi>",
   "license": "MIT OR Apache-2.0",
   "scripts": {
     "start": "env NODE_ENV=development yarn run webpack-dev-server --  --progress --colors",

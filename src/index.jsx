@@ -8,8 +8,8 @@ import createStore from 'state/store';
 import './styles';
 import App from './components/app';
 
-window.initTyponator = function () {
-  document.querySelectorAll('.typonator-widget').forEach((element) => {
+window.initCodeStatesVisualizer = function initCodeStatesVisualizer() {
+  document.querySelectorAll('.code-states-visualizer-widget').forEach((element) => {
     const store = createStore();
     render(
       <Provider store={store}>

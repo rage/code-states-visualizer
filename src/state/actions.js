@@ -1,14 +1,15 @@
 // @flow
-export const TEXT_CHANGED = 'TEXT_CHANGED';
 
-export function textAction(text: string) {
+export const CODE_STATE_CHANGED = 'CODE_STATE_CHANGED';
+
+export function codeStateAction(index: number) {
   return {
-    text,
-    type: TEXT_CHANGED,
+    type: CODE_STATE_CHANGED,
+    index,
   };
 }
 
-export type TextAction = {
-  text: string,
-  type: string
+export type CodeStateAction = {
+  type: string,
+  index: number,
 }
