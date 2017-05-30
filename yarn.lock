@@ -2247,6 +2247,14 @@ doctrine@^2.0.0:
     esutils "^2.0.2"
     isarray "^1.0.0"
 
+dom-classlist@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/dom-classlist/-/dom-classlist-1.0.1.tgz#722814dc2f509d3d7d06f2533ba9ff48eeea59b9"
+
+dom-matches@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/dom-matches/-/dom-matches-2.0.0.tgz#d2728b416a87533980eb089b848d253cf23a758c"
+
 domain-browser@^1.1.1:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/domain-browser/-/domain-browser-1.1.7.tgz#867aa4b093faa05f1de08c06f4d7b21fdf8698bc"
@@ -6686,6 +6694,13 @@ which@1, which@^1.2.4, which@^1.2.8, which@^1.2.9:
   resolved "https://registry.yarnpkg.com/which/-/which-1.2.14.tgz#9a87c4378f03e827cecaf1acdf56c736c01c14e5"
   dependencies:
     isexe "^2.0.0"
+
+wicg-focus-ring@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/wicg-focus-ring/-/wicg-focus-ring-1.0.1.tgz#3868c464ed27b5ca0891329b44c5d1144c0b2095"
+  dependencies:
+    dom-classlist "^1.0.1"
+    dom-matches "^2.0.0"
 
 wide-align@^1.1.0:
   version "1.1.0"

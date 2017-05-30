@@ -1,7 +1,23 @@
 @import "/node_modules/codemirror/lib/codemirror.css";
 
+:focus:not(.focus-ring) {
+  outline: none;
+}
+
+.focus-ring {
+  outline: .15rem solid lightblue;
+}
+
+::-moz-focus-inner {
+  border: none;
+}
+
+$container-width: 40rem;
+$button-size: 2rem;
+$circle-color: lighten(#5D83DA, 5%);
+
 .container {
-  max-width: 40rem;
+  max-width: $container-width;
   margin: 2rem auto;
 }
 
@@ -9,6 +25,42 @@
   white-space: pre;
 }
 
-.line-error {
-  background: lightblue;
+.current-line {
+  background: desaturate(lighten($circle-color, 30%), 30%);
+}
+
+.code-state {
+  color: $circle-color;
+  background: white;
+  border: .2rem solid $circle-color;
+  width: $button-size;
+  height: $button-size;
+  margin: .1rem;
+  padding: 0;
+  border-radius: $button-size;
+  cursor: pointer;
+  &.active {
+    font-weight: bold;
+    color: white;
+    background-color: $circle-color;
+    border-color: $circle-color;
+  }
+}
+
+.code-states {
+  display: flex;
+  justify-content: space-between;
+}
+
+$timeline-height: .3rem;
+
+.timeline-line {
+  height: $timeline-height;
+  max-width: $container-width - $button-size;
+  position: relative;
+  left: -$button-size / 2;
+  bottom: -$button-size / 2 - $timeline-height;
+  background: desaturate(lighten($circle-color, 25%), 30%);
+  z-index: -1000;
+  margin-left: $button-size;
 }

@@ -9,15 +9,20 @@ class CodeState extends Component {
   props: {
     index: number,
     onClick: (index: number) => void,
+    active: boolean,
   }
 
   render() {
+    let className = prefixer('code-state');
+    if (this.props.active) {
+      className += ` ${prefixer('active')}`;
+    }
     return (
       <button
-        className={prefixer('code-state')}
+        className={className}
         onClick={() => { this.props.onClick(this.props.index); }}
       >
-        {this.props.index}
+        {this.props.index + 1}
       </button>
     );
   }

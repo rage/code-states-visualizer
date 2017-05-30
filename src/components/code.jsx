@@ -20,13 +20,13 @@ class Code extends Component {
   editor: CodeMirror;
 
   addHighlighting() {
-    this.editor.getCodeMirror().getDoc().addLineClass(this.props.line_number, 'background', prefixer('line-error'));
+    this.editor.getCodeMirror().getDoc().addLineClass(this.props.line_number, 'background', prefixer('current-line'));
   }
 
   removeHighlighting() {
     for (let i = 0; i < this.props.line_count; i++) {
       if (i !== this.props.line_number) {
-        this.editor.getCodeMirror().getDoc().removeLineClass(i, 'background', prefixer('line-error'));
+        this.editor.getCodeMirror().getDoc().removeLineClass(i, 'background', prefixer('current-line'));
       }
     }
   }

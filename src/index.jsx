@@ -1,4 +1,5 @@
 import 'babel-polyfill';
+import 'wicg-focus-ring';
 
 import React from 'react';
 import { render } from 'react-dom';
