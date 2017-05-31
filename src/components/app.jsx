@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import prefixer from 'utils/class-name-prefixer';
 import Code from './code';
 import CodeStates from './code-states';
+import PrevButton from './prev-button';
+import NextButton from './next-button';
 
 class App extends Component {
   render() {
@@ -10,6 +12,8 @@ class App extends Component {
       <div className={prefixer('container')}>
         <Code />
         <CodeStates />
+        <PrevButton />
+        <NextButton />
       </div>
     );
   }
