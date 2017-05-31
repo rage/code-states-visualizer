@@ -23,6 +23,10 @@ $circle-color: lighten(#5D83DA, 5%);
 
 .code {
   white-space: pre;
+  border: .13rem dashed #bdc3c7;
+  border-radius: .2rem;
+  margin: 2rem 0;
+  padding: 1rem;
 }
 
 .current-line {
@@ -63,4 +67,29 @@ $timeline-height: .3rem;
   background: desaturate(lighten($circle-color, 25%), 30%);
   z-index: -1000;
   margin-left: $button-size;
+}
+
+.buttonContainer {
+  display: flex;
+}
+
+.change-state-button {
+  color: white;
+  background-color: darken($circle-color, 15%);
+  font-weight: bold;
+  padding: .5rem 1rem;
+  margin: 1.5rem 2rem;
+  width: 100%;
+  border: 0;
+  border-radius: .2rem;
+  transition: background-color .2s;
+  &:hover {
+    background-color: darken($circle-color, 20%);
+  }
+  &.disabled {
+    background-color: #95a5a6;
+    &:hover {
+      cursor: not-allowed;
+    }
+  }
 }
