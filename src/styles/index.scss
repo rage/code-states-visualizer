@@ -15,14 +15,21 @@
 $container-width: 40rem;
 $button-size: 2rem;
 $circle-color: lighten(#5D83DA, 5%);
+$odd-line-bg-color: #ececec;
 
 .container {
   max-width: $container-width;
   margin: 2rem auto;
 }
 
+.code-parts-container {
+  display: flex;
+}
+
 .code-container {
   display: flex;
+  width: 50%;
+  margin: 1rem;
 }
 
 .code {
@@ -31,7 +38,12 @@ $circle-color: lighten(#5D83DA, 5%);
   border-radius: .2rem;
   margin: 2rem 0;
   padding: 1rem;
+}
+
+.variables-and-output-container {
+  display: flex;
   width: 50%;
+  margin: 0 1rem;
 }
 
 .variables-wrapper {
@@ -40,14 +52,32 @@ $circle-color: lighten(#5D83DA, 5%);
 
 .variables {
   border-collapse: collapse;
-  margin: 2rem;
+  margin: 2rem 0;
   width: 50%;
-  tr:nth-child(odd){background-color: #f2f2f2};
+  tr:nth-child(odd){background-color: $odd-line-bg-color};
   th {
     background-color: darken($circle-color, 10%);
     color: white;
+    padding: 0 1rem;
+  }
+  td {
+    padding-left: 1rem;
   }
 }
+
+.output {
+  white-space: pre;
+  margin: 0;
+  width: 50%;
+  div:nth-child(odd){background-color: $odd-line-bg-color};
+}
+
+.header {
+    background-color: darken($circle-color, 10%);
+    color: white;
+    padding: 0 1rem;
+    margin: 3rem 0 0 0;
+  }
 
 .current-line {
   background: desaturate(lighten($circle-color, 30%), 30%);

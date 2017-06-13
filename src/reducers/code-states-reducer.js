@@ -8,6 +8,7 @@ export type State = {
   code_states: [],
   index: number,
   current_stack: {},
+  current_print_outputs: [],
 }
 
 /* eslint-disable max-len */
@@ -27,11 +28,16 @@ function normalizeStack(stack) {
   return newLocals;
 }
 
+function fixNewLines(outputs) {
+  return outputs.split('\n');
+}
+
 const initialState = {
   code: tempCode,
   code_states: tempStates,
   index: 0,
   current_stack: normalizeStack(tempStates[0].stack_to_render),
+  current_print_outputs: fixNewLines(tempStates[0].stdout),
 };
 
 export default createReducer(initialState, {
@@ -41,6 +47,7 @@ export default createReducer(initialState, {
       ...{
         index: action.index,
         current_stack: normalizeStack(tempStates[action.index].stack_to_render),
+        current_print_outputs: fixNewLines(tempStates[action.index].stdout),
       },
     };
   },
