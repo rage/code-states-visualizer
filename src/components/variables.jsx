@@ -8,13 +8,16 @@ class Variables extends Component {
   render() {
     return (
       <div className={prefixer('variables-wrapper')}>
-        { this.props.variables.map(stackFrame => (
+        { this.props.stack.map(stackFrame => (
           <table className={prefixer('variables')}>
+            <tr>
+              <th colSpan="2">{stackFrame.func_name}</th>
+            </tr>
             <tr>
               <th>Name</th>
               <th>Value</th>
             </tr>
-            {stackFrame.map(key =>
+            { stackFrame.encoded_locals.map(key =>
                (
                  <tr>
                    <td>{key[0]}</td>
@@ -31,7 +34,7 @@ class Variables extends Component {
 
 function mapStateToProps(state: State) {
   return {
-    variables: state.codeStatesReducer.current_stack,
+    stack: state.codeStatesReducer.current_stack,
   };
 }
 

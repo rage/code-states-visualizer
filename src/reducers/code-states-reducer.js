@@ -7,7 +7,7 @@ export type State = {
   code: string,
   code_states: [],
   index: number,
-  current_stack: {},
+  current_stack: [],
   current_print_outputs: [],
 }
 
@@ -18,14 +18,22 @@ const tempStates = JSON.parse('[{"stdout":"","event":"call","line":3,"stack_to_r
 /* eslint-enable max-len */
 
 function normalizeStack(stack) {
-  const locals = stack.map(o => o.encoded_locals);
-  const newLocals = locals.map(o => Object.keys(o).map((local) => {
-    if (local === '__return__') {
-      return ['return value', o[local]];
-    }
-    return [local, o[local]];
-  }));
-  return newLocals;
+  const modifiedStack = [];
+  stack.forEach((sf) => {
+    const toModifiedStack = {};
+    toModifiedStack.func_name = sf.func_name;
+    const modifiedLocals = [];
+    Object.entries(sf.encoded_locals).forEach(([key, value]) => {
+      if (key === '__return__') {
+        modifiedLocals.push(['return value', value[0]]);
+      } else {
+        modifiedLocals.push([key, JSON.stringify(value)]);
+      }
+    });
+    toModifiedStack.encoded_locals = modifiedLocals;
+    modifiedStack.push(toModifiedStack);
+  });
+  return modifiedStack;
 }
 
 function fixNewLines(outputs) {
