@@ -15,11 +15,11 @@ class App extends Component {
           <div className={prefixer('code-container')}>
             <Code />
           </div>
-          <div className={prefixer('variables-and-output-container')}>
+          <div className={prefixer('variables-container')}>
             <Variables />
-            <PrintOutput />
           </div>
         </div>
+        <PrintOutput />
         <div className={prefixer('timeline-container')}>
           <CodeStates />
           <div className={prefixer('button-container')}>

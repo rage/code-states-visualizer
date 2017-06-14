@@ -13,9 +13,11 @@ class PrintOutput extends Component {
     return (
       <div className={prefixer('output')}>
         <h4 className={prefixer('header')}>Print output</h4>
-        { this.props.output.map(line => (
-          <div>{line}</div>
-        )) }
+        <div className={prefixer('output-content')}>
+          { this.props.output.map(line => (
+            <div>{line}</div>
+            )) }
+        </div>
       </div>
     );
   }

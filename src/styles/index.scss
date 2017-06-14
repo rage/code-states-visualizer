@@ -1,5 +1,9 @@
 @import "/node_modules/codemirror/lib/codemirror.css";
 
+html {
+  font-size: 16px;
+}
+
 :focus:not(.focus-ring) {
   outline: none;
 }
@@ -12,7 +16,7 @@
   border: none;
 }
 
-$container-width: 40rem;
+$container-width: 53.75rem;
 $button-size: 2rem;
 $circle-color: lighten(#5D83DA, 5%);
 $odd-line-bg-color: #ececec;
@@ -28,56 +32,76 @@ $odd-line-bg-color: #ececec;
 
 .code-container {
   display: flex;
-  width: 50%;
-  margin: 1rem;
+  width: 75%;
+  margin: 1rem 0;
+  margin-top: 0;
+  margin-right: 1rem;
 }
 
 .code {
+  width: 100%;
   white-space: pre;
   border: .13rem dashed #bdc3c7;
   border-radius: .2rem;
-  margin: 2rem 0;
+  margin: 0;
   padding: 1rem;
 }
 
-.variables-and-output-container {
+.variables-container {
   display: flex;
-  width: 50%;
-  margin: 0 1rem;
+  width: 25%;
+  margin: 0;
 }
 
 .variables-wrapper {
-  padding: 1rem;
+  width: 100%;
 }
 
 .variables {
   border-collapse: collapse;
-  margin: 2rem 0;
-  width: 50%;
+  margin: 0;
+  margin-bottom: 1rem;
+  width: 100%;
+  opacity: .5;
+  transition: opacity .3s;
   tr:nth-child(odd){background-color: $odd-line-bg-color};
   th {
-    background-color: darken($circle-color, 10%);
+    background-color: gray;
+    transition: background-color .3s;
     color: white;
     padding: 0 1rem;
   }
   td {
     padding-left: 1rem;
   }
+  &.active {
+    opacity: 1;
+    th {
+      background-color: darken($circle-color, 10%);
+    }
+  }
 }
 
 .output {
   white-space: pre;
-  margin: 0;
-  width: 50%;
-  div:nth-child(odd){background-color: $odd-line-bg-color};
+  margin-bottom: 1rem;
+  width: 100%;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.2);
+  min-height: 6rem;
+  border-radius: .2rem;
 }
 
 .header {
-    background-color: darken($circle-color, 10%);
-    color: white;
-    padding: 0 1rem;
-    margin: 3rem 0 0 0;
-  }
+  border-radius: .2rem .2rem 0 0;
+  background-color: darken($circle-color, 10%);
+  color: white;
+  padding: .5rem;
+  margin: 0;
+}
+
+.output-content {
+  padding: 1rem;
+}
 
 .current-line {
   background: desaturate(lighten($circle-color, 30%), 30%);
