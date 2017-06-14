@@ -24,7 +24,9 @@ function normalizeStack(stack) {
     toModifiedStack.func_name = sf.func_name;
     toModifiedStack.is_highlighted = sf.is_highlighted;
     const modifiedLocals = [];
-    Object.entries(sf.encoded_locals).forEach(([key, value]) => {
+    sf.ordered_varnames.forEach((name) => {
+      const key = name;
+      const value = sf.encoded_locals[name];
       if (key === '__return__') {
         if (Array.isArray(value)) {
           modifiedLocals.push(['return value', value[0]]);
