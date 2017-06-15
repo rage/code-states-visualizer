@@ -57,6 +57,17 @@ $odd-line-bg-color: #ececec;
   width: 100%;
 }
 
+.variables-table-wrapper {
+  min-height: 6rem;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.2);
+  border-radius: .2rem;
+}
+
+.table-content-wrapper {
+  padding: 1rem;
+  width: 100%;
+}
+
 .variables {
   border-collapse: collapse;
   margin: 0;
@@ -64,15 +75,22 @@ $odd-line-bg-color: #ececec;
   width: 100%;
   opacity: .5;
   transition: opacity .3s;
-  tr:nth-child(odd){background-color: $odd-line-bg-color};
   th {
     background-color: gray;
     transition: background-color .3s;
     color: white;
     padding: 0 1rem;
   }
-  td {
-    padding-left: 1rem;
+  tr {
+    td {
+      padding: .3rem;
+      padding-bottom: 0;
+    }
+  }
+  tr:last-of-type {
+    td {
+      padding-bottom: .3rem;
+    }
   }
   &.active {
     opacity: 1;
@@ -80,6 +98,10 @@ $odd-line-bg-color: #ececec;
       background-color: darken($circle-color, 10%);
     }
   }
+}
+
+.table-header {
+  border-radius: .2rem .2rem 0 0;
 }
 
 .output {

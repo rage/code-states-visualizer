@@ -14,22 +14,26 @@ class Variables extends Component {
             className += ` ${prefixer('active')}`;
           }
           return (
-            <table className={className}>
-              <tr>
-                <th colSpan="2">{stackFrame.func_name}</th>
-              </tr>
-              <tr>
-                <th>Name</th>
-                <th>Value</th>
-              </tr>
-              { stackFrame.encoded_locals.map(key =>
-               (
-                 <tr>
-                   <td>{key[0]}</td>
-                   <td>{key[1]}</td>
-                 </tr>
-              ))}
-            </table>
+            <div className={prefixer('variables-table-wrapper')}>
+              <table className={className}>
+                <tr>
+                  <th colSpan="2" className={prefixer('table-header')}>{stackFrame.func_name}</th>
+                </tr>
+                <tr>
+                  <th>Name</th>
+                  <th>Value</th>
+                </tr>
+                <tbody className={prefixer('table-content-wrapper')}>
+                  { stackFrame.encoded_locals.map(key => (
+                    <tr>
+                      <td>{key[0]}</td>
+                      <td>{key[1]}</td>
+                    </tr>
+                    ))
+                  }
+                </tbody>
+              </table>
+            </div>
           )
 ;
         },
