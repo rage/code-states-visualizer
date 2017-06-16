@@ -34,8 +34,7 @@ class Variables extends Component {
                 </tbody>
               </table>
             </div>
-          )
-;
+          );
         },
         )}
       </div>
