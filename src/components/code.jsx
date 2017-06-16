@@ -21,12 +21,14 @@ class Code extends Component {
 
   addHighlighting() {
     this.editor.getCodeMirror().getDoc().addLineClass(this.props.line_number, 'background', prefixer('current-line'));
+    this.editor.getCodeMirror().getDoc().addLineClass(this.props.line_number, 'gutter', prefixer('current-line-gutter'));
   }
 
   removeHighlighting() {
     for (let i = 0; i < this.props.line_count; i++) {
       if (i !== this.props.line_number) {
         this.editor.getCodeMirror().getDoc().removeLineClass(i, 'background', prefixer('current-line'));
+        this.editor.getCodeMirror().getDoc().removeLineClass(i, 'gutter', prefixer('current-line-gutter'));
       }
     }
   }
@@ -36,7 +38,7 @@ class Code extends Component {
       <div className={prefixer('code')}>
         <CodeMirror
           value={this.props.code}
-          options={{ readOnly: true, mode: 'text/x-java' }}
+          options={{ readOnly: true, mode: 'text/x-java', lineNumbers: true }}
           ref={(o) => { this.editor = o; }}
         />
       </div>
