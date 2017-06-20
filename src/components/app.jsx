@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import prefixer from 'utils/class-name-prefixer';
 import Code from './code';
 import Variables from './variables';
+import Objects from './objects';
 import PrintOutput from './print-output';
 import CodeStates from './code-states';
 import ChangeStateButton from './change-state-button';
@@ -20,6 +21,7 @@ class App extends Component {
             <Variables />
           </div>
         </div>
+        <Objects />
         <PrintOutput />
         <div className={prefixer('timeline-container')}>
           <CodeStates />

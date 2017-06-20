@@ -9,6 +9,7 @@ export type State = {
   index: number,
   current_stack: [],
   current_print_outputs: [],
+  current_heap: [],
 }
 
 // function normalizeObject(heap, refnum) {
@@ -36,11 +37,12 @@ function normalizeStack(state) {
         }
       } else if (Array.isArray(value)) {
         if (value[0] === 'REF') {
+          // debugger;
           const refnum = value[1];
           modifiedLocals.push([key, `${state.heap[refnum][1]}.instance`]);
-          state.heap[refnum].shift();
-          state.heap[refnum].shift();
-          objects.push([`${state.heap[value[1]][1]}.instance`, state.heap[refnum]]);
+          // state.heap[refnum].shift();
+          // state.heap[refnum].shift();
+          objects.push([`${state.heap[refnum][1]}.instance`, state.heap[refnum]]);
           // modifiedLocals.push([key, normalizeObject(state.heap, value[1])]);
         }
       } else {
@@ -52,6 +54,26 @@ function normalizeStack(state) {
     modifiedStack.unshift(toModifiedStack);
   });
   return modifiedStack;
+}
+
+function normalizeHeap(state) {
+  const refNames = state.stack_to_render.forEach((sf) => {
+    const refArray = [];
+    Object.entries(sf.encoded_locals).forEach((key, value) => {
+      if (Array.isArray(value)) {
+        if (value[0] === 'REF') {
+          refArray.push([key, value[1]]);
+        }
+      }
+    });
+    return refArray;
+  });
+  const heap = state.heap;
+  const modifiedHeap = [];
+  Object.entries(heap).forEach((refnum, values) => {
+    modifiedHeap.push([refNames[refnum], values]);
+  });
+  return modifiedHeap;
 }
 
 function fixNewLines(outputs) {
@@ -69,6 +91,7 @@ export default function createReducerCreator(input: string) {
     index: 0,
     current_stack: normalizeStack(states[0]),
     current_print_outputs: fixNewLines(states[0].stdout),
+    current_heap: normalizeHeap(states[0]),
   };
 
   return createReducer(initialState, {
@@ -79,6 +102,7 @@ export default function createReducerCreator(input: string) {
           index: action.index,
           current_stack: normalizeStack(states[action.index]),
           current_print_outputs: fixNewLines(states[action.index].stdout),
+          current_heap: normalizeHeap(states[action.index]),
         },
       };
     },
