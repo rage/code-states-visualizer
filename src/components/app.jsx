@@ -6,6 +6,7 @@ import Variables from './variables';
 import PrintOutput from './print-output';
 import CodeStates from './code-states';
 import ChangeStateButton from './change-state-button';
+import StateCounter from './statecounter';
 
 class App extends Component {
   render() {
@@ -26,6 +27,7 @@ class App extends Component {
             <ChangeStateButton
               direction="prev"
             />
+            <StateCounter />
             <ChangeStateButton
               direction="next"
             />

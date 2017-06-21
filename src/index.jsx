@@ -11,7 +11,8 @@ import App from './components/app';
 
 window.initCodeStatesVisualizer = function initCodeStatesVisualizer() {
   document.querySelectorAll('.code-states-visualizer-widget').forEach((element) => {
-    const store = createStore();
+    const data = element.dataset.input;
+    const store = createStore(data);
     render(
       <Provider store={store}>
         <App />

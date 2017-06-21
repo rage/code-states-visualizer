@@ -5,7 +5,6 @@ import type { Dispatch } from 'state/reducer';
 import { codeStateAction } from 'state/actions';
 import prefixer from 'utils/class-name-prefixer';
 import Slider from 'rc-slider';
-import Tooltip from 'rc-tooltip';
 
 class Timeline extends Component {
   props: {
@@ -19,15 +18,7 @@ class Timeline extends Component {
     const handle = (props) => {
       const { value, dragging, index, ...restProps } = props;
       return (
-        <Tooltip
-          prefixCls="rc-slider-tooltip"
-          overlay={this.props.index + 1}
-          visible={dragging}
-          placement="top"
-          key={index}
-        >
-          <Handle value={value} {...restProps} />
-        </Tooltip>
+        <Handle value={value} {...restProps} />
       );
     };
 

@@ -11,7 +11,7 @@ html {
 }
 
 .focus-ring {
-  outline: .15rem solid lightblue;
+  outline: .15rem solid #89C4F4;
 }
 
 ::-moz-focus-inner {
@@ -20,7 +20,7 @@ html {
 
 $container-width: 53.75rem;
 $circle-color: lighten(#5D83DA, 5%);
-$odd-line-bg-color: #ececec;
+$disabled-color: #95a5a6;
 
 .container {
   max-width: $container-width;
@@ -33,7 +33,8 @@ $odd-line-bg-color: #ececec;
 
 .code-container {
   display: flex;
-  width: 75%;
+  flex: 3;
+  width: 100%;
   margin: 1rem 0;
   margin-top: 0;
   margin-right: 1rem;
@@ -66,7 +67,8 @@ $odd-line-bg-color: #ececec;
 
 .variables-container {
   display: flex;
-  width: 25%;
+  flex: 1;
+  width: 100%;
   margin: 0;
 }
 
@@ -78,6 +80,7 @@ $odd-line-bg-color: #ececec;
   min-height: 6rem;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.2);
   border-radius: .2rem;
+  width: 100%;
 }
 
 .table-content-wrapper {
@@ -93,7 +96,7 @@ $odd-line-bg-color: #ececec;
   opacity: .5;
   transition: opacity .3s;
   th {
-    background-color: gray;
+    background-color: $disabled-color;
     transition: background-color .3s;
     color: white;
     padding: 0 1rem;
@@ -102,6 +105,11 @@ $odd-line-bg-color: #ececec;
     td {
       padding: .3rem;
       padding-bottom: 0;
+      width: 98px;
+      max-width: 98px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
   tr:last-of-type {
@@ -197,9 +205,17 @@ $odd-line-bg-color: #ececec;
     background-color: darken($circle-color, 20%);
   }
   &.disabled {
-    background-color: #95a5a6;
+    background-color: $disabled-color;
     &:hover {
       cursor: not-allowed;
     }
   }
+}
+
+.state-counter {
+  padding: .5rem 1rem;
+  margin: 1.5rem 2rem;
+  width: 25%;
+  border: 0;
+  border-radius: .2rem;
 }

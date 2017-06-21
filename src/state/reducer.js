@@ -20,6 +20,8 @@ export type ThunkArguments = {
 
 export type GetState = () => State;
 
-export default combineReducers({
-  codeStatesReducer,
-});
+export default function reducerCreator(input: string) {
+  return combineReducers({
+    codeStatesReducer: codeStatesReducer(input),
+  });
+}

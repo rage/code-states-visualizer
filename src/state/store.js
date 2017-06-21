@@ -6,12 +6,12 @@ import rootReducer from './reducer';
 export type ThunkArgument = {
 }
 
-export default function makeStore() {
+export default function makeStore(input: string) {
   /* eslint-disable no-underscore-dangle */
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   /* eslint-enable no-underscore-dangle */
   const store = createStore(
-    rootReducer,
+    rootReducer(input),
     composeEnhancers(
       applyMiddleware(thunk.withExtraArgument()),
     ),
