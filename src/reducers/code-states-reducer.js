@@ -11,7 +11,8 @@ export type State = {
   current_print_outputs: [],
 }
 
-function normalizeStack(stack) {
+function normalizeStack(state) {
+  const stack = state.stack_to_render;
   const modifiedStack = [];
   stack.forEach((sf) => {
     const toModifiedStack = {};
@@ -26,6 +27,20 @@ function normalizeStack(stack) {
           modifiedLocals.push(['return value', value[0]]);
         } else {
           modifiedLocals.push(['return value', value]);
+        }
+      } else if (Array.isArray(value)) {
+        if (value[0] === 'REF') {
+          const refnum = value[1];
+          const arr = [];
+          state.heap[refnum].forEach((o) => { arr.push(o); });
+          arr.shift();
+          let prettyValue = '[';
+          arr.forEach((o) => { prettyValue += `${o.toString()}, `; });
+          if (prettyValue.length > 2) {
+            prettyValue = prettyValue.substring(0, prettyValue.length - 2);
+          }
+          prettyValue += ']';
+          modifiedLocals.push([key, prettyValue]);
         }
       } else {
         modifiedLocals.push([key, JSON.stringify(value)]);
@@ -50,7 +65,7 @@ export default function createReducerCreator(input: string) {
     code,
     code_states: states,
     index: 0,
-    current_stack: normalizeStack(states[0].stack_to_render),
+    current_stack: normalizeStack(states[0]),
     current_print_outputs: fixNewLines(states[0].stdout),
   };
 
@@ -60,7 +75,7 @@ export default function createReducerCreator(input: string) {
         ...state,
         ...{
           index: action.index,
-          current_stack: normalizeStack(states[action.index].stack_to_render),
+          current_stack: normalizeStack(states[action.index]),
           current_print_outputs: fixNewLines(states[action.index].stdout),
         },
       };

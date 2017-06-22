@@ -33,7 +33,7 @@ $disabled-color: #95a5a6;
 
 .code-container {
   display: flex;
-  flex: 3;
+  flex: 2.5;
   width: 100%;
   margin: 1rem 0;
   margin-top: 0;
@@ -107,9 +107,8 @@ $disabled-color: #95a5a6;
       padding-bottom: 0;
       width: 98px;
       max-width: 98px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      word-wrap: break-word;
+      border-top: 1px solid #eceeef;
     }
   }
   tr:last-of-type {
@@ -176,7 +175,7 @@ $disabled-color: #95a5a6;
   height: 20px;
   width: 20px;
   margin-left: -7px;
-  margin-top: -6px;
+  margin-top: -8px;
 }
 
 .rc-slider-rail {
