@@ -12,11 +12,6 @@ export type State = {
   current_heap: [],
 }
 
-// function normalizeObject(heap, refnum) {
-
-//   return JSON.stringify(heap[refnum]);
-// }
-
 function normalizeStack(state) {
   const stack = state.stack_to_render;
   const modifiedStack = [];
@@ -25,7 +20,6 @@ function normalizeStack(state) {
     toModifiedStack.func_name = sf.func_name;
     toModifiedStack.is_highlighted = sf.is_highlighted;
     const modifiedLocals = [];
-    const objects = [];
     sf.ordered_varnames.forEach((name) => {
       const key = name;
       const value = sf.encoded_locals[name];
@@ -48,14 +42,12 @@ function normalizeStack(state) {
           }
           prettyValue += ']';
           modifiedLocals.push([key, prettyValue]);
-          objects.push([`${state.heap[refnum][1]}.instance`, state.heap[refnum]]);
         }
       } else {
         modifiedLocals.push([key, JSON.stringify(value)]);
       }
     });
     toModifiedStack.encoded_locals = modifiedLocals;
-    toModifiedStack.objects = objects;
     modifiedStack.unshift(toModifiedStack);
   });
   return modifiedStack;
