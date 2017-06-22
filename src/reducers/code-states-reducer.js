@@ -37,13 +37,18 @@ function normalizeStack(state) {
         }
       } else if (Array.isArray(value)) {
         if (value[0] === 'REF') {
-          // debugger;
           const refnum = value[1];
-          modifiedLocals.push([key, `${state.heap[refnum][1]}.instance`]);
-          // state.heap[refnum].shift();
-          // state.heap[refnum].shift();
+          const arr = [];
+          state.heap[refnum].forEach((o) => { arr.push(o); });
+          arr.shift();
+          let prettyValue = '[';
+          arr.forEach((o) => { prettyValue += `${o.toString()}, `; });
+          if (prettyValue.length > 2) {
+            prettyValue = prettyValue.substring(0, prettyValue.length - 2);
+          }
+          prettyValue += ']';
+          modifiedLocals.push([key, prettyValue]);
           objects.push([`${state.heap[refnum][1]}.instance`, state.heap[refnum]]);
-          // modifiedLocals.push([key, normalizeObject(state.heap, value[1])]);
         }
       } else {
         modifiedLocals.push([key, JSON.stringify(value)]);
@@ -57,12 +62,14 @@ function normalizeStack(state) {
 }
 
 function normalizeHeap(state) {
-  const refNames = state.stack_to_render.forEach((sf) => {
+  const refNames = state.stack_to_render.map((sf) => {
     const refArray = [];
-    Object.entries(sf.encoded_locals).forEach((key, value) => {
+    Object.entries(sf.encoded_locals).forEach((entry) => {
+      const key = entry[0];
+      const value = entry[1];
       if (Array.isArray(value)) {
         if (value[0] === 'REF') {
-          refArray.push([key, value[1]]);
+          refArray.push([value[1], key]);
         }
       }
     });
@@ -71,7 +78,7 @@ function normalizeHeap(state) {
   const heap = state.heap;
   const modifiedHeap = [];
   Object.entries(heap).forEach((refnum, values) => {
-    modifiedHeap.push([refNames[refnum], values]);
+    modifiedHeap.push([refNames[0][refnum], values]);
   });
   return modifiedHeap;
 }
