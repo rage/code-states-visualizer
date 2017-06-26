@@ -58,6 +58,19 @@ function fixNewLines(outputs) {
   return outputs.split('\n');
 }
 
+function getExceptionsFromState(state, prevState) {
+  let message = '';
+  if (typeof state.exception_msg !== 'undefined') {
+    message = state.exception_msg;
+    if (typeof prevState !== 'undefined') {
+      state.line = prevState.line;
+    } else {
+      state.line = 1;
+    }
+  }
+  return message;
+}
+
 export default function createReducerCreator(input: string) {
   const data = JSON.parse(input);
   const code = data.code;
@@ -69,6 +82,7 @@ export default function createReducerCreator(input: string) {
     index: 0,
     current_stack: normalizeStack(states[0]),
     current_print_outputs: fixNewLines(states[0].stdout),
+    current_exception: getExceptionsFromState(states[0], undefined),
   };
 
   return createReducer(initialState, {
@@ -79,6 +93,7 @@ export default function createReducerCreator(input: string) {
           index: action.index,
           current_stack: normalizeStack(states[action.index]),
           current_print_outputs: fixNewLines(states[action.index].stdout),
+          current_exception: getExceptionsFromState(states[action.index], states[action.index - 1]),
         },
       };
     },
