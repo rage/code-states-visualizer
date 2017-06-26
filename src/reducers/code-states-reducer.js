@@ -11,46 +11,64 @@ export type State = {
   current_print_outputs: [],
 }
 
+function normalizeReturnVariable(value) {
+  return Array.isArray(value) ? ['return value', value[0]] : ['return value', value];
+}
+
+function normalizeArrayVariable(key, value, state) {
+  const refnum = value[1];
+  const arr = [];
+  state.heap[refnum].forEach((o) => {
+    if (Array.isArray(o)) {
+      for (let i = 0; i < o[1]; i++) {
+        arr.push(0);
+      }
+    } else {
+      arr.push(o);
+    }
+  });
+  arr.shift();
+  let prettyValue = '[';
+  arr.forEach((o) => { prettyValue += `${o.toString()}, `; });
+  if (prettyValue.length > 2) {
+    prettyValue = prettyValue.substring(0, prettyValue.length - 2);
+  }
+  prettyValue += ']';
+  return [key, prettyValue];
+}
+
+function normalizeLocal(name, frame, modifiedLocals, state) {
+  const returnLocals = modifiedLocals;
+  const key = name;
+  const value = frame.encoded_locals[name];
+  if (key === '__return__') {
+    return normalizeReturnVariable(value, returnLocals);
+  } else if (Array.isArray(value)) {
+    if (value[0] === 'REF') {
+      return normalizeArrayVariable(key, value, state, returnLocals);
+    } else if (value[0] === 'NUMBER-LITERAL') {
+      return [key, value[1]];
+    }
+    return [key, JSON.stringify(value)];
+  }
+  return [key, JSON.stringify(value)];
+}
+
+function normalizeFrame(frame, modifiedStack, state) {
+  const toModifiedStack = {};
+  toModifiedStack.func_name = frame.func_name;
+  toModifiedStack.is_highlighted = frame.is_highlighted;
+  const modifiedLocals = [];
+  frame.ordered_varnames.forEach((name) => { modifiedLocals.push(normalizeLocal(name, frame, modifiedLocals, state)); });
+  toModifiedStack.encoded_locals = modifiedLocals;
+  modifiedStack.unshift(toModifiedStack);
+  return modifiedStack;
+}
+
 function normalizeStack(state) {
   const stack = state.stack_to_render;
-  const modifiedStack = [];
-  stack.forEach((sf) => {
-    const toModifiedStack = {};
-    toModifiedStack.func_name = sf.func_name;
-    toModifiedStack.is_highlighted = sf.is_highlighted;
-    const modifiedLocals = [];
-    sf.ordered_varnames.forEach((name) => {
-      const key = name;
-      const value = sf.encoded_locals[name];
-      if (key === '__return__') {
-        if (Array.isArray(value)) {
-          modifiedLocals.push(['return value', value[0]]);
-        } else {
-          modifiedLocals.push(['return value', value]);
-        }
-      } else if (Array.isArray(value)) {
-        if (value[0] === 'REF') {
-          const refnum = value[1];
-          const arr = [];
-          state.heap[refnum].forEach((o) => { arr.push(o); });
-          arr.shift();
-          let prettyValue = '[';
-          arr.forEach((o) => { prettyValue += `${o.toString()}, `; });
-          if (prettyValue.length > 2) {
-            prettyValue = prettyValue.substring(0, prettyValue.length - 2);
-          }
-          prettyValue += ']';
-          modifiedLocals.push([key, prettyValue]);
-        } else if (value[0] === 'NUMBER-LITERAL') {
-          modifiedLocals.push([key, value[1]]);
-        }
-      } else {
-        modifiedLocals.push([key, JSON.stringify(value)]);
-      }
-    });
-    toModifiedStack.encoded_locals = modifiedLocals;
-    modifiedStack.unshift(toModifiedStack);
-  });
+  let modifiedStack = [];
+  stack.forEach((sf) => { modifiedStack = normalizeFrame(sf, modifiedStack, state); });
   return modifiedStack;
 }
 
@@ -58,6 +76,7 @@ function fixNewLines(outputs) {
   return outputs.split('\n');
 }
 
+/* eslint-disable no-param-reassign */
 function getExceptionsFromState(state, prevState) {
   let message = '';
   if (typeof state.exception_msg !== 'undefined') {
@@ -70,6 +89,7 @@ function getExceptionsFromState(state, prevState) {
   }
   return message;
 }
+/* eslint-enable no-param-reassign */
 
 export default function createReducerCreator(input: string) {
   const data = JSON.parse(input);
