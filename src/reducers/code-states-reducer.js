@@ -20,8 +20,14 @@ function normalizeArrayVariable(key, value, state) {
   const arr = [];
   state.heap[refnum].forEach((o) => {
     if (Array.isArray(o)) {
-      for (let i = 0; i < o[1]; i++) {
-        arr.push(0);
+      if (o[0] === 'REF') {
+        const inception = normalizeArrayVariable(key, o, state);
+        inception.shift();
+        arr.push(inception);
+      } else {
+        for (let i = 0; i < o[1]; i++) {
+          arr.push(0);
+        }
       }
     } else {
       arr.push(o);
@@ -29,9 +35,18 @@ function normalizeArrayVariable(key, value, state) {
   });
   arr.shift();
   let prettyValue = '[';
-  arr.forEach((o) => { prettyValue += `${o.toString()}, `; });
+  arr.forEach((o) => {
+    if (Array.isArray(o)) {
+      prettyValue += `${o.toString()},\n `;
+    } else {
+      prettyValue += `${o.toString()}, `;
+    }
+  });
   if (prettyValue.length > 2) {
     prettyValue = prettyValue.substring(0, prettyValue.length - 2);
+    if (prettyValue.charAt(prettyValue.length - 1) === ',') {
+      prettyValue = prettyValue.substring(0, prettyValue.length - 1);
+    }
   }
   prettyValue += ']';
   return [key, prettyValue];
