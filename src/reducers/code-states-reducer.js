@@ -41,6 +41,8 @@ function normalizeStack(state) {
           }
           prettyValue += ']';
           modifiedLocals.push([key, prettyValue]);
+        } else if (value[0] === 'NUMBER-LITERAL') {
+          modifiedLocals.push([key, value[1]]);
         }
       } else {
         modifiedLocals.push([key, JSON.stringify(value)]);
