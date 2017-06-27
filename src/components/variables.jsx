@@ -24,12 +24,14 @@ class Variables extends Component {
                   <th>Value</th>
                 </tr>
                 <tbody className={prefixer('table-content-wrapper')}>
-                  { stackFrame.encoded_locals.map(key => (
-                    <tr>
+                  { stackFrame.encoded_locals.map((key) => {
+                    const value = key[1];
+                    const valueClass = value.indexOf('\n') > 0 ? prefixer('wrapwhitespace') : '';
+                    return (<tr>
                       <td>{key[0]}</td>
-                      <td>{key[1]}</td>
-                    </tr>
-                    ))
+                      <td className={valueClass}>{key[1]}</td>
+                    </tr>);
+                  })
                   }
                 </tbody>
               </table>

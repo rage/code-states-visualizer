@@ -90,7 +90,6 @@ $disabled-color: #95a5a6;
 }
 
 .variables {
-  white-space: pre;
   border-collapse: collapse;
   margin: 0;
   margin-bottom: 1rem;
@@ -126,6 +125,10 @@ $disabled-color: #95a5a6;
   }
 }
 
+.wrapwhitespace {
+  white-space: pre;
+}
+
 .table-header {
   border-radius: .2rem .2rem 0 0;
 }
@@ -155,7 +158,7 @@ $disabled-color: #95a5a6;
   background-color: lighten(#F22613, 15%);
   color: white;
   margin-bottom: 1rem;
-  width: calc(100% - 2rem);
+  width: 100%;
   display: none;
   padding: 1rem;
   border-radius: .2rem;
@@ -190,7 +193,7 @@ $disabled-color: #95a5a6;
   height: 20px;
   width: 20px;
   margin-left: -7px;
-  margin-top: -8px;
+  margin-top: -6px;
 }
 
 .rc-slider-rail {
