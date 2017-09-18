@@ -26,7 +26,7 @@ class Variables extends Component {
                 <tbody className={prefixer('table-content-wrapper')}>
                   { stackFrame.encoded_locals.map((key) => {
                     const value = key[1];
-                    const valueClass = value.indexOf('\n') > 0 ? prefixer('wrapwhitespace') : '';
+                    const valueClass = value.toString().indexOf('\n') > 0 ? prefixer('wrapwhitespace') : '';
                     return (<tr>
                       <td>{key[0]}</td>
                       <td className={valueClass}>{key[1]}</td>
