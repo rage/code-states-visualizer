@@ -14,7 +14,8 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name].js',
-    library: 'random_widget',
+    library: 'code-states-visualizer',
+    libraryTarget: 'commonjs2'
   },
   resolve: {
     modules: [path.join(__dirname, 'src'), 'node_modules'],
