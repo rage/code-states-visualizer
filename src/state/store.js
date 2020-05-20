@@ -1,40 +1,42 @@
 // @flow
-import { applyMiddleware, createStore, compose } from 'redux';
-import thunk from 'redux-thunk';
-import ReduxActionAnalytics from 'redux-action-analytics';
-import createHash from 'sha.js';
-import * as storejs from 'store';
-import rootReducer from './reducer';
+import { applyMiddleware, createStore, compose } from "redux"
+import thunk from "redux-thunk"
+import ReduxActionAnalytics from "redux-action-analytics"
+import createHash from "sha.js"
+import * as storejs from "store"
+import rootReducer from "./reducer"
 
-export type ThunkArgument = {
-}
+export type ThunkArgument = {}
 
 export default function makeStore(input: string) {
   /* eslint-disable no-underscore-dangle */
-  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+  const composeEnhancers =
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
   /* eslint-enable no-underscore-dangle */
-  const sha256 = createHash('sha256');
-  const identifier = sha256.update(input, 'utf8').digest('hex');
-  const analytics = new ReduxActionAnalytics('https://usage.testmycode.io/api/v0/data', 'code-states-visualizer', identifier, 10000, () => {
-    const user = storejs.get('tmc.user');
-    if (user === undefined) {
-      return {};
-    }
-    return {
-      username: user.username,
-    };
-  });
-  const middlewares = [thunk.withExtraArgument()];
-  if (window['research-agreement-agreed']) {
-    middlewares.unshift(analytics.getMiddleware());
+  const sha256 = createHash("sha256")
+  const identifier = sha256.update(input, "utf8").digest("hex")
+  const analytics = new ReduxActionAnalytics(
+    "https://usage.testmycode.io/api/v0/data",
+    "code-states-visualizer",
+    identifier,
+    10000,
+    () => {
+      const user = storejs.get("tmc.user")
+      if (user === undefined) {
+        return {}
+      }
+      return {
+        username: user.username,
+      }
+    },
+  )
+  const middlewares = [thunk.withExtraArgument()]
+  if (window["research-agreement-agreed"]) {
+    middlewares.unshift(analytics.getMiddleware())
   }
   const store = createStore(
     rootReducer(input),
-    composeEnhancers(
-      applyMiddleware(
-        ...middlewares,
-      ),
-    ),
-  );
-  return store;
+    composeEnhancers(applyMiddleware(...middlewares)),
+  )
+  return store
 }
