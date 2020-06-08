@@ -1,19 +1,19 @@
 // @flow
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import type { Dispatch } from "state/reducer"
-import { codeStateAction } from "state/actions"
-import prefixer from "utils/class-name-prefixer"
+import type { Dispatch } from "../state/reducer"
+import { codeStateAction } from "../state/actions"
+import prefixer from "../utils/class-name-prefixer"
 import Slider from "rc-slider"
 
-class Timeline extends Component {
-  props: {
-    index: number,
-    onChange: (index: number) => void,
-    count: number,
-    value: number,
-  }
+type Props = {
+  index: number,
+  onChange: (index: number) => void,
+  count: number,
+  value: number,
+}
 
+class Timeline extends Component<Props> {
   render() {
     const Handle = Slider.Handle
     const handle = (props) => {
@@ -46,4 +46,4 @@ function mapDispatchToProps(dispatch: Dispatch) {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Timeline)
+export default connect<Props, *, *, *, *, *>(null, mapDispatchToProps)(Timeline)

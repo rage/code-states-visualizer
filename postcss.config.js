@@ -3,7 +3,7 @@ module.exports = {
     /* eslint-disable global-require */
     require("autoprefixer")(),
     require("postcss-class-prefix")("code-states-visualizer-", {
-      ignore: [/cm/, /CodeMirror/, "focus-ring", /rc-slider/],
+      ignore: [/cm/, /CodeMirror/, "focus-visible", /rc-slider/],
     }),
     /* eslint-enable global-require */
   ],

@@ -1,6 +1,6 @@
 const webpack = require("webpack")
 const path = require("path")
-const ExtractTextPlugin = require("extract-text-webpack-plugin")
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const BrowserSyncPlugin = require("browser-sync-webpack-plugin")
 
 const isDevelopment = process.env.NODE_ENV === "development"
@@ -27,20 +27,19 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: "babel-loader",
-        options: {
-          babelrc: true,
-        },
+        // options: {
+        //   babelrc: true,
+        // },
       },
       {
-        test: /\.scss$/,
+        test: /(\.scss$)|(\.css$)/,
         exclude: /node_modules/,
-        use: ExtractTextPlugin.extract([
-          "css-loader",
-          "postcss-loader",
-          "sass-loader",
-        ]),
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
     ],
+  },
+  optimization: {
+    minimize: isDevelopment ? false : true, //Update this to true or false
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -48,10 +47,7 @@ module.exports = {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV || "development"),
       },
     }),
-    new ExtractTextPlugin("[name].css"),
-    isDevelopment
-      ? null
-      : new webpack.optimize.UglifyJsPlugin({ minimize: true }),
+    new MiniCssExtractPlugin("[name].css"),
     new BrowserSyncPlugin({
       host: "localhost",
       port: 3000,

@@ -1,12 +1,16 @@
 // @flow
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import type { State } from "state/reducer"
-import prefixer from "utils/class-name-prefixer"
+import type { State } from "../state/reducer"
+import prefixer from "../utils/class-name-prefixer"
 import Timeline from "./timeline"
-import PropTypes from "prop-types"
 
-class CodeStates extends Component {
+type Props = {
+  active_index: number,
+  code_states: [],
+}
+
+class CodeStates extends Component<Props> {
   render() {
     return (
       <div className={prefixer("timeline-wrapper")}>
@@ -26,9 +30,4 @@ function mapStateToProps(state: State) {
   }
 }
 
-CodeStates.propTypes = {
-  active_index: PropTypes.number,
-  code_states: PropTypes.array,
-}
-
-export default connect(mapStateToProps)(CodeStates)
+export default connect<Props, *, *, *, *, *>(mapStateToProps)(CodeStates)

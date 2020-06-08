@@ -2,8 +2,8 @@
 
 import { combineReducers } from "redux"
 
-import codeStatesReducer from "reducers/code-states-reducer"
-import type { State as CodeStatesState } from "reducers/code-states-reducer"
+import codeStatesReducer from "../reducers/code-states-reducer"
+import type { State as CodeStatesState } from "../reducers/code-states-reducer"
 
 /* eslint-disable no-use-before-define */
 export type ThunkAction = (

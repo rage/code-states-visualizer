@@ -1,11 +1,14 @@
 // @flow
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import type { State } from "state/reducer"
-import prefixer from "utils/class-name-prefixer"
-import PropTypes from "prop-types"
+import type { State } from "../state/reducer"
+import prefixer from "../utils/class-name-prefixer"
 
-class Exception extends Component {
+type Props = {
+  exception: string,
+}
+
+class Exception extends Component<Props> {
   render() {
     let className = prefixer("exception")
     if (this.props.exception !== "") {
@@ -25,8 +28,4 @@ function mapStateToProps(state: State) {
   }
 }
 
-Exception.propTypes = {
-  exception: PropTypes.string,
-}
-
-export default connect(mapStateToProps)(Exception)
+export default connect<Props, *, *, *, *, *>(mapStateToProps)(Exception)

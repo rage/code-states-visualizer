@@ -1,8 +1,8 @@
 // @flow
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import type { State } from "state/reducer"
-import prefixer from "utils/class-name-prefixer"
+import type { State } from "../state/reducer"
+import prefixer from "../utils/class-name-prefixer"
 import PropTypes from "prop-types"
 
 class Variables extends Component {
@@ -63,4 +63,4 @@ Variables.propTypes = {
   stack: PropTypes.array,
 }
 
-export default connect(mapStateToProps)(Variables)
+export default connect<Props, *, *, *, *, *>(mapStateToProps)(Variables)

@@ -1,11 +1,15 @@
 // @flow
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import type { State } from "state/reducer"
-import prefixer from "utils/class-name-prefixer"
-import PropTypes from "prop-types"
+import type { State } from "../state/reducer"
+import prefixer from "../utils/class-name-prefixer"
 
-class StateCounter extends Component {
+type Props = {
+  states: [],
+  index: number,
+}
+
+class StateCounter extends Component<Props> {
   render() {
     return (
       <div className={prefixer("state-counter")}>
@@ -22,9 +26,4 @@ function mapStateToProps(state: State) {
   }
 }
 
-StateCounter.propTypes = {
-  states: PropTypes.array,
-  index: PropTypes.number,
-}
-
-export default connect(mapStateToProps)(StateCounter)
+export default connect<Props, *, *, *, *, *>(mapStateToProps)(StateCounter)

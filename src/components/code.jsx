@@ -1,13 +1,18 @@
 // @flow
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import type { State } from "state/reducer"
-import prefixer from "utils/class-name-prefixer"
-import CodeMirror from "react-codemirror"
+import type { State } from "../state/reducer"
+import prefixer from "../utils/class-name-prefixer"
+import CodeMirror from "react-codemirror2"
 import "codemirror/mode/clike/clike"
-import PropTypes from "prop-types"
 
-class Code extends Component {
+type Props = {
+  code: string,
+  line_number: number,
+  line_count: number,
+}
+
+class Code extends Component<Props> {
   componentDidMount() {
     this.addHighlighting()
     this.removeHighlighting()
@@ -79,10 +84,4 @@ function mapStateToProps(state: State) {
   }
 }
 
-Code.propTypes = {
-  code: PropTypes.string,
-  line_number: PropTypes.number,
-  line_count: PropTypes.number,
-}
-
-export default connect(mapStateToProps)(Code)
+export default connect<Props, *, *, *, *, *>(mapStateToProps)(Code)

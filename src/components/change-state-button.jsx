@@ -1,18 +1,18 @@
 // @flow
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import type { State, Dispatch } from "state/reducer"
-import { codeStateAction } from "state/actions"
-import prefixer from "utils/class-name-prefixer"
+import type { State, Dispatch } from "../state/reducer"
+import { codeStateAction } from "../state/actions"
+import prefixer from "../utils/class-name-prefixer"
 
-class ChangeStateButton extends Component {
-  props: {
-    direction: string,
-    index: number,
-    codeStatesLength: number,
-    onClick: (index: number) => void,
-  }
+type Props = {
+  direction: string,
+  index: number,
+  codeStatesLength: number,
+  onClick: (index: number, direction: string) => void,
+}
 
+class ChangeStateButton extends Component<Props> {
   disabled() {
     if (this.props.direction === "next") {
       return this.props.index === this.props.codeStatesLength - 1
@@ -63,4 +63,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChangeStateButton)
+export default connect<Props, *, *, *, *, *, *>(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ChangeStateButton)

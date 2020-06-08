@@ -1,4 +1,4 @@
-import "wicg-focus-ring"
+import "focus-visible"
 
 import React from "react"
 import { render } from "react-dom"
@@ -11,7 +11,8 @@ import PropTypes from "prop-types"
 
 /* eslint-disable */
 try {
-  require("babel-polyfill")
+  require("core-js/stable")
+  require("regenerator-runtime/runtime")
 } catch (e) {}
 /* eslint-enable */
 

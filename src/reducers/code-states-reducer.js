@@ -1,7 +1,7 @@
 // @flow
 import { createReducer } from "redux-create-reducer"
-import { CODE_STATE_CHANGED } from "state/actions"
-import type { CodeStateAction } from "state/actions"
+import { CODE_STATE_CHANGED } from "../state/actions"
+import type { CodeStateAction } from "../state/actions"
 
 export type State = {
   code: string,

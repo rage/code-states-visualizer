@@ -1,11 +1,14 @@
 // @flow
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import type { State } from "state/reducer"
-import prefixer from "utils/class-name-prefixer"
-import PropTypes from "prop-types"
+import type { State } from "../state/reducer"
+import prefixer from "../utils/class-name-prefixer"
 
-class PrintOutput extends Component {
+type Props = {
+  output: [],
+}
+
+class PrintOutput extends Component<Props> {
   render() {
     return (
       <div className={prefixer("output")}>
@@ -26,8 +29,4 @@ function mapStateToProps(state: State) {
   }
 }
 
-PrintOutput.propTypes = {
-  output: PropTypes.array,
-}
-
-export default connect(mapStateToProps)(PrintOutput)
+export default connect<Props, *, *, *, *, *>(mapStateToProps)(PrintOutput)
