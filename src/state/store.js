@@ -9,7 +9,7 @@ import rootReducer from './reducer';
 export type ThunkArgument = {
 }
 
-export default function makeStore(input: string) {
+export default function makeStore(input: string, language: string) {
   /* eslint-disable no-underscore-dangle */
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   /* eslint-enable no-underscore-dangle */
@@ -29,7 +29,7 @@ export default function makeStore(input: string) {
     middlewares.unshift(analytics.getMiddleware());
   }
   const store = createStore(
-    rootReducer(input),
+    rootReducer(input, language),
     composeEnhancers(
       applyMiddleware(
         ...middlewares,

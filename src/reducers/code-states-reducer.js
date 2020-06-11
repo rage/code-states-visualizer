@@ -80,7 +80,17 @@ function normalizeFrame(frame, modifiedStack, state) {
   return modifiedStack;
 }
 
-function normalizeStack(state) {
+function normalizeStack(state, language) {
+  if (language === 'python') {
+    const variables = [];
+    state.ordered_globals.forEach((g) => { variables.push([g, state.globals[g]]); });
+    state.encoded_locals = variables;
+    state.is_highlighted = true;
+    if (state.func_name === '<module>') {
+      state.func_name = 'Global variables';
+    }
+    return [state];
+  }
   const stack = state.stack_to_render;
   let modifiedStack = [];
   stack.forEach((sf) => { modifiedStack = normalizeFrame(sf, modifiedStack, state); });
@@ -106,18 +116,24 @@ function getExceptionsFromState(state, prevState) {
 }
 /* eslint-enable no-param-reassign */
 
-export default function createReducerCreator(input: string) {
+export default function createReducerCreator(input: string, language: string) {
   const data = JSON.parse(input);
   const code = data.code;
-  const states = data.trace.slice(1);
+  let states;
+  if (language === 'python') {
+    states = data.trace;
+  } else {
+    states = data.trace.slice(1);
+  }
 
   const initialState = {
     code,
     code_states: states,
     index: 0,
-    current_stack: normalizeStack(states[0]),
+    current_stack: normalizeStack(states[0], language),
     current_print_outputs: fixNewLines(states[0].stdout),
     current_exception: getExceptionsFromState(states[0], undefined),
+    language,
   };
 
   return createReducer(initialState, {
@@ -126,7 +142,7 @@ export default function createReducerCreator(input: string) {
         ...state,
         ...{
           index: action.index,
-          current_stack: normalizeStack(states[action.index]),
+          current_stack: normalizeStack(states[action.index], language),
           current_print_outputs: fixNewLines(states[action.index].stdout),
           current_exception: getExceptionsFromState(states[action.index], states[action.index - 1]),
         },

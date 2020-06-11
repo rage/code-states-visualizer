@@ -8,13 +8,13 @@ import 'codemirror/mode/clike/clike';
 
 class Code extends Component {
   componentDidMount() {
-    this.addHighlighting();
     this.removeHighlighting();
+    this.addHighlighting();
   }
 
   componentDidUpdate() {
-    this.addHighlighting();
     this.removeHighlighting();
+    this.addHighlighting();
   }
 
   editor: CodeMirror;
@@ -26,10 +26,8 @@ class Code extends Component {
 
   removeHighlighting() {
     for (let i = 0; i < this.props.line_count; i++) {
-      if (i !== this.props.line_number) {
-        this.editor.getCodeMirror().getDoc().removeLineClass(i, 'background', prefixer('current-line'));
-        this.editor.getCodeMirror().getDoc().removeLineClass(i, 'gutter', prefixer('current-line-gutter'));
-      }
+      this.editor.getCodeMirror().getDoc().removeLineClass(i, 'background', prefixer('current-line'));
+      this.editor.getCodeMirror().getDoc().removeLineClass(i, 'gutter', prefixer('current-line-gutter'));
     }
   }
 
