@@ -80,16 +80,50 @@ function normalizeFrame(frame, modifiedStack, state) {
   return modifiedStack;
 }
 
+function normalizePythonFrame(frame, stack, state) {
+  const modifiedStack = stack;
+  const modifiedLocals = [];
+  modifiedStack.func_name = frame.func_name;
+  modifiedStack.is_highlighted = frame.is_highlighted;
+  frame.ordered_varnames.forEach((name) => { modifiedLocals.push(normalizeLocal(name, frame, modifiedLocals, state)); });
+  modifiedStack.encoded_locals = modifiedLocals;
+  return modifiedStack;
+}
+
+function normalizeVariables(variables, variableNames, state) {
+  const normalizedVariables = [];
+  variableNames.forEach((name) => {
+    const variable = variables[name];
+    let normalizedVariable = [name, variable];
+    if (Array.isArray(variable)) {
+      if (state.heap[variable[1]][0] === 'LIST') {
+        normalizedVariable = normalizeArrayVariable(name, variable, state);
+        normalizedVariables.push(normalizedVariable);
+      }
+    } else {
+      normalizedVariables.push(normalizedVariable);
+    }
+  });
+  return normalizedVariables;
+}
+
 function normalizeStack(state, language) {
   if (language === 'python') {
-    const variables = [];
-    state.ordered_globals.forEach((g) => { variables.push([g, state.globals[g]]); });
-    state.encoded_locals = variables;
-    state.is_highlighted = true;
-    if (state.func_name === '<module>') {
-      state.func_name = 'Global variables';
+    let modifiedState = state;
+    let globalVariables = [];
+    if (Object.keys(state.heap).length > 0) {
+      globalVariables = normalizeVariables(state.globals, state.ordered_globals, state);
+    } else {
+      state.ordered_globals.forEach((g) => { globalVariables.push([g, state.globals[g]]); });
     }
-    return [state];
+    modifiedState.global_variables = globalVariables;
+    const stack = state.stack_to_render;
+    if (stack === undefined || stack.length === 0) {
+      modifiedState.is_highlighted = true;
+    } else {
+      stack.forEach((sf) => { modifiedState = normalizePythonFrame(sf, modifiedState, state); });
+    }
+    return [modifiedState];
   }
   const stack = state.stack_to_render;
   let modifiedStack = [];
