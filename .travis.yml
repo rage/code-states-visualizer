@@ -9,20 +9,5 @@ branches:
   - master
 install:
 - yarn install
-before_script:
-- git config --global user.name "hnbot"
-- git config --global user.email "nygrenh+hnbot@gmail.com"
-- export COMMIT_MESSAGE=Update:\ $(git log -1 --pretty=%s)
-- git clone -b gh-pages --single-branch https://github.com/materiaalit/code-states-visualizer-cdn.git dist
 script:
-- yarn build-travis
-after_success:
-- cd dist
-- git checkout HEAD README.md .github
-- git add --all
-- git commit -m "$COMMIT_MESSAGE"
-- git push "https://hnbot:$GITHUB_API_KEY@github.com/materiaalit/code-states-visualizer-cdn.git"
-  gh-pages:gh-pages 2>&1 | sed "s/$GITHUB_API_KEY/<confidential>/g"
-env:
-  global:
-    secure: sNccCqGwtMEZWT/7A9E4frNxm+q/1eaXrqmc1wmJKdDRXQtDMri4I9Y2B7QjJaRsifH1f5lJSPi4SYUXfn0W4/0GosaatTYa6ZAiT23h8U1WodXVv996aNDL6S2MgfZbe8kSKtE2TFewYsBbFW3sUERiK+5J9+tMiSx3hBG5H+Dh1+lWjutcJA8XdJntlGUS03H8pUg9zl4+NYNazQTAisl40vK/fq6HRKWA6pV7UwdBHdD/dS9SfhR2pa1Akfqmw3e2j4bp8POx8dpMHWrT31OYSmBS2z9gEyll4ez2qL/nRlBymPbBPdQXdn0udHv2zsxxO6IXUB0T1/d5xya2456doCZAfzcC8kbnacv8fB0hxO30FJo1LvClYPGD8nOMUD824DX1FlMZuH0KaH4TXxRhs64n92xO30Nte7PQL8d43+dXOG3foo8oJslov7aCxu8/9R7OiCLlE1qf9D7k1RuYuKshE9bUenZx87rBhIK9iY32cFWb+ErrBD5HnliLgkrhZqgtt/DBOagDSpGYbnCRWGXBg8qst5V5CYmUifI9e1iWTFAdQkjShW5TLzcq69jbkmSU0fStoXNil3M32OVK0bQfOTR8wnH8+BiL72F7Dzu64kA99w+jIJG/l6tgQW16dcej/KyFMKstv44tsNnmif/bnJf8ZZAJwf8XxPE=
+- yarn build
